@@ -3,10 +3,8 @@ package projects;
 import java.util.Scanner;
 
 import java.math.RoundingMode;
-import java.util.Random;
+//import java.util.Random;
 import java.text.*;
-
-
 
 public class ChangeCalc {
 	
@@ -14,20 +12,16 @@ public class ChangeCalc {
 	
 		
 		Scanner Scan = new Scanner(System.in);
-//	double start = 0.0; 	// starting value
-//	double end = 1000.00;	// max value 
-//	double random = new Random().nextDouble(); 	//randomly generated number
+
 	double price = 0.0;
-//	double price 0.0;; 
-//									 (1000 - 0)
-//	item - price
 	
 	double taxprice = 0.00;;
 	
 	double pocket = 0.00;
 	double change = price - pocket ;
 	
-//	String state;
+	String State = ".";
+	String Stateline = ".";
 
 	
 	DecimalFormat pricecents = new DecimalFormat("#.##");
@@ -39,16 +33,6 @@ public class ChangeCalc {
 	
 	pocket = Scan.nextDouble();
 	
-//	try {
-	
-	
-//	pocket = Scan.nextDouble();
-//	}
-	
-//	catch(InputMismatchException e) {
-//		System.out.println("Invalid entry...");
-//		System.out.println("Entry must be an integer between 0 and 1000");
-//	}
 	
 	System.out.println("How much does the item cost? ");
 	
@@ -58,11 +42,11 @@ public class ChangeCalc {
 	System.out.println("Eg. NY for New York, NJ for New Jersey, etc \n");
 	
 //	try {
-//	Scanner scan = new Scanner(System.in);
+	Scanner Statename = new Scanner(System.in);
 	
-	String Stateline = Scan.nextLine();
+	Stateline = Statename.nextLine();
 	
-	String State = Stateline.toUpperCase();
+	State = Stateline.toUpperCase();
 	
 		
 //	================================sales tax code starts here=============================		
@@ -168,25 +152,16 @@ public class ChangeCalc {
 		taxprice = price * 1.0560;
 	else if (State.equals("WYOMING"))
 		taxprice = price * 1.0600;
-	else {System.out.println("Invalid entry...");
-		System.out.println("Please enter the state for which you would like to calculate sales...");
-	}
+	
+//			================================sales tax code ends here=============================	
 		 
-		
-	
-//	}
-//	catch(Exception e) {
-//		System.out.println("Invalid entry...");
-//		System.out.println("Entry must be a valid state entry");
-//	}
-	
 	System.out.println("Because of the sales tax in your state, ");
 	System.out.println("your price before taxes is " + pricecents.format(price));
 	System.out.println("your new price after taxes is " + pricecents.format(taxprice));
 	System.out.println("");
 	
 	if (taxprice > pocket) {
-		System.out.println("The cost of this item is higher than what you have." + pricecents.format(price) + ".");
+		System.out.println("The cost of this item is " + pricecents.format(taxprice) + ".");
 		System.out.println("Insufficient funds, return to your residence and get more funds.");
 	}else { 
 		System.out.println("Transaction Complete");
@@ -196,57 +171,134 @@ public class ChangeCalc {
 	System.out.print("Since you have $" + pricecents.format(pocket));
 	System.out.println(" and this item costs $" + pricecents.format(taxprice) + ","); 
 	
-	System.out.println("$" + pricecents.format(change)
-	+ " is your change. You will get back ");
+	System.out.println("$" + pricecents.format(change) + " is your change. You will get back: ");
 	
 	
-	changeout.setRoundingMode(RoundingMode.DOWN);
+	changeout.setRoundingMode(RoundingMode.DOWN);  // this changeout method will round down the decimal value to just 
+	
+	
 	double hundred = (change / 100.00) ;  	//this divides out the hundreds
-	if (hundred > 0.6) {
-	System.out.println(changeout.format(hundred) + " hundreds,");
-	}double hundred_rm = change % 100.00;
+	if (hundred < 0.99) {	//if there is no hundreds to be given as change
+	System.out.print("");
+	}
+	if (hundred > 0.99 && hundred < 1.99) {	//if there is only one hundred to be given as change
+	System.out.println(changeout.format(hundred) + " hundred dollar bill,");	
+	} 
+	if (hundred > 1.99) {						//if there is 2 or more hundreds to be given as change
+	System.out.println(changeout.format(hundred) + " hundreds dollar bills,");	
+	}
+	double hundred_rm = change % 100.00;
 	
-	double fifty = hundred_rm / 50.00;	//this divides out the fifties  
-	if (fifty > 0.6){
-	System.out.println(changeout.format(fifty) + " fifties,");
-	}double fifty_rm = hundred_rm % 50.00;	//
 	
-	double twenty = fifty_rm / 20.0;	//this divides out the twenties
-	if (twenty > 0.6){
-	System.out.println(changeout.format(twenty) + " twenties,");
-	}double twenty_rm = fifty_rm % 20.0;
+	double fifty = (hundred_rm / 50.00);  	//this divides out the fifties
+	if (fifty < 0.99) {	//if there is no fifties to be given as change
+	System.out.print("");
+	}
+	if (fifty > 0.99 && fifty < 1.99) {	//if there is only one fifty to be given as change
+	System.out.println(changeout.format(fifty) + " fifty dollar bill,");	
+	} 
+	double fifty_rm = hundred_rm % 50.00;
 	
-	double ten = twenty_rm / 10.0;	//this divides out the tens
-	if (ten > 0.6) {
-	System.out.println(changeout.format(ten) + " tens,");
-	}double ten_rm = twenty_rm % 10.0;
 	
-	double five = ten_rm / 5.0;		//this divides out the fives
-	if (five > 0.6){
-	System.out.println(changeout.format(five) + " fives,");
-	}double five_rm = ten_rm % 5.0;
+	double twenty = (fifty_rm / 20.0);  	//this divides out the twenties
+	if (twenty < 0.99) {	//if there is no twenties to be given as change
+	System.out.print("");
+	}
+	if (twenty > 0.99 && twenty < 1.99) {	//if there is only one twenty to be given as change
+	System.out.println(changeout.format(twenty) + " twenty dollar bill,");	
+	} 
+	if (twenty > 1.99 && twenty < 4.99) {						//if there is 2 or more twenties to be given as change
+	System.out.println(changeout.format(twenty) + " twenty dollar bills,"); // maximum of 4 can be given back before they add up to the next highest increment	
+	}
+	double twenty_rm = fifty_rm % 20.0;
+	
+
+	double ten = twenty_rm / 10.0;  	//this divides out the tens with the same logic as the fifties function
+	if (ten < 0.99) {	//if there is no tens to be given as change
+	System.out.print("");
+	}
+	if (ten > 0.99 && ten < 1.99) {	//if there is only one ten to be given as change
+	System.out.println(changeout.format(ten) + " ten dollar bill,");	
+	} 
+	double ten_rm = twenty_rm % 10.0;
+	
+	
+	double five = ten_rm / 5.0;		//this divides out the fives with the same logic as the fifties function
+	if (five < 0.99) {	//if there is no fives to be given as change
+	System.out.print("");
+	}
+	if (five > 0.99 && five < 1.99) {	//if there is only one five to be given as change
+	System.out.println(changeout.format(five) + " five dollar bill,");	
+	} 
+	double five_rm = ten_rm % 5.0;
+	
 	
 	double dollar = five_rm / 1.0;	//this divides out the singles
-	if (dollar > 0.6){
-	System.out.println(changeout.format(dollar) + " singles,");
-	}double dlr_rm = five_rm % 1.0;
+	if (dollar < 0.99) {	//if there is no singles to be given as change
+	System.out.print("");
+	}
+	if (dollar > 0.99 && dollar < 1.99) {	//if there is only one dollar to be given as change
+	System.out.println(changeout.format(dollar) + " single,");	
+	} 
+	if (dollar > 1.99 && dollar < 4.99) {						//if there is 2 or more singles to be given as change
+	System.out.println(changeout.format(dollar) + " singles,");	// maximum of 4 can be given back before they add up to the next highest increment
+	}
+	double dlr_rm = five_rm % 1.0;
+//	System.out.println(dlr_rm);
 	
-	double quarter = dlr_rm / 0.25; 	//this divides out the quarters
-	if (quarter > 0.6){
-	System.out.println(changeout.format(quarter) + " quarters,");
-	}double q_rm = dlr_rm % 0.25;		// this will return the remainder after dividing out the quarters
 	
-	double dime = q_rm / 0.10;			//this divides out the dimes
-	if (dime > 0.1){
-	System.out.println(changeout.format(dime) + " dimes,");
-	}double d_rm = q_rm % 0.10;
+	double quarter = dlr_rm / 0.25;	
+	if (quarter < 0.99) {	
+	System.out.print("");
+	}
+	if (quarter > 0.99 && quarter < 1.99) {	
+	System.out.println(changeout.format(quarter) + " quarter,");	
+	} 
+	if (quarter > 1.99 && quarter < 3.99) {						
+	System.out.println(changeout.format(quarter) + " quarters,");	
+	}
+	double q_rm = dlr_rm % 0.25;
 	
-	double nickel = d_rm / 0.05;		//this divides out the nickels
-	if (nickel > 0.1){
-	System.out.println(changeout.format(nickel) + " nickels,");
-	}double n_rm = d_rm % 0.05;
 	
-	System.out.println(" and \n" + changeout.format(n_rm) + " pennies."); //returns the pennies
+	double dime = q_rm / 0.10;	
+	if (dime < 0.99) {	
+	System.out.print("");
+	}
+	if (dime > 0.99 && dime < 1.99) {	
+	System.out.println(changeout.format(dime) + " dime,");	
+	} 
+	if (dime > 1.99 && dime < 9.99) {						
+	System.out.println(changeout.format(dime) + " dimes,");	
+	}
+	double d_rm = q_rm % 0.10;
+	
+	
+	double nickel = d_rm / 0.05;	
+	if (nickel < 0.99) {	
+	System.out.print("");
+	}
+	if (nickel > 0.99 && nickel < 1.99) {	
+	System.out.println(changeout.format(nickel) + " nickel,");	
+	} 
+	if (nickel > 1.99 && nickel < 4.99) {						
+	System.out.println(changeout.format(nickel) + " nickels,");	
+	}
+	double n_rm = (d_rm % 0.05) * 100.00;
+	 
+//	n_rm ++;
+	System.out.println(pricecents.format(n_rm));
+	
+	  	
+	if (n_rm < 0.99) {	
+	System.out.print("");
+	}
+	if (n_rm > 0.99 && n_rm < 1.99) {	
+	System.out.println(changeout.format(n_rm) + " penny,");	
+	} 
+	if (n_rm > 1.99 && n_rm < 4.99) {						
+	System.out.println(changeout.format(n_rm) + " pennies,"); 
+	}
+	
 		
 	}	
 }
